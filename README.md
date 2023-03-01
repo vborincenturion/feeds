@@ -19,11 +19,13 @@ Then, install the required tools/packages:
 - RapidPeptideGeneration - ```pip3 install rpg```
 - Pandas - ```conda install -c anaconda pandas```
 
-Finally, clone this repository:
+Clone this repository:
 
 ```git clone https://github.com/vborincenturion/FEEDS.git```
 
-Locate and change the "rpg_user.py" of your RapidPeptideGenerator tool for the one in the db folder of this github. 
+Locate and change the "rpg_user.py" of your RapidPeptideGenerator tool for the one in the db folder of this github.
+
+Finally, use the script "download_db.py" to download all the databases to run the feeds tool.
 
 ## Usage
 
