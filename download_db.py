@@ -21,3 +21,5 @@ urllib.request.urlretrieve(url, os.path.join('db', filename))
 with zipfile.ZipFile(os.path.join('db', filename), 'r') as zip_ref:
     zip_ref.extractall('db')
 
+# Remove the ZIP file
+os.remove(os.path.join('db', filename))
