@@ -7,6 +7,7 @@ import re
 import pandas as pd
 import glob
 import argparse
+from Bio import SeqIO
 
 def parse_args():
     parser = argparse.ArgumentParser(description='FEEDS: Food wastE biopEptiDe claSsifier: from genome to function')
@@ -17,7 +18,7 @@ def parse_args():
 
 
 # Define the required directories
-directories = ['diamond', 'orf_prediction', 'merged', 'merged/diamond', 'peptide']
+directories = ['diamond', 'orf_prediction', 'merged', 'merged/diamond', 'peptide', 'filtered']
 
 # Create the directories if they do not exist
 for directory in directories:
@@ -26,47 +27,55 @@ for directory in directories:
 
 args = parse_args()
 threads = args.threads
+
 kingdom = args.kingdom
 
-#Prodigal
 if kingdom == 'bacteria':
     input_dir = f"genome/{kingdom}"
     output_dir = "orf_prediction"
-    file_extension = ".fasta"
+    file_extension = (".fasta", ".fna", ".fa")
 
-for file_name in os.listdir(input_dir):
-    if file_name.endswith(file_extension):
-        input_file = os.path.join(input_dir, file_name)
-        output_file = os.path.join(output_dir, f"{file_name[:-len(file_extension)]}.faa")
-        cmd = f"prodigal -i {input_file} -a {output_file}"
-        os.system(cmd)
+    for file_name in os.listdir(input_dir):
+        if file_name.endswith(file_extension):
+            input_file = os.path.join(input_dir, file_name)
+            output_file = os.path.join(output_dir, f"{file_name[:-len(file_extension)]}.faa")
+            cmd = f"prodigal -i {input_file} -a {output_file}"
+            os.system(cmd)
+
+    #Diamond
+    input_dir = "orf_prediction"
+    output_dir = "diamond"
+    database_path = "db/merops"
+    file_extension = (".faa", ".fasta")
+    num_threads = args.threads
+
+    for file_name in os.listdir(input_dir):
+        if file_name.endswith(file_extension):
+            input_file = os.path.join(input_dir, file_name)
+            output_file = os.path.join(output_dir, f"{file_name[:-len(file_extension)]}.csv")
+            cmd = ["diamond", "blastp", "--more-sensitive", "-k", "1", "-f", "6", "qseqid", "sseqid", "pident", "--id", "90", "--query-cover", "85", "--subject-cover", "85", "-d", database_path, "-q", input_file, "-o", output_file, "-p", str(num_threads)]
+            subprocess.run(cmd)
+            # add column names to the output file
+            subprocess.run(f"echo 'qseqid\tsseqid\tpident' | cat - {output_file} > temp && mv temp {output_file}", shell=True)
+
+elif kingdom == 'yeast':
+    input_dir = f"genome/{kingdom}"
+    output_dir = "diamond"
+    database_path = "db/merops"
+    file_extension = ".faa"
+    num_threads = args.threads
+
+    for file_name in os.listdir(input_dir):
+        if file_name.endswith(file_extension):
+            input_file = os.path.join(input_dir, file_name)
+            output_file = os.path.join(output_dir, f"{file_name[:-len(file_extension)]}.csv")
+            cmd = ["diamond", "blastp", "--more-sensitive", "-k", "1", "-f", "6", "qseqid", "sseqid", "pident", "--id", "90", "--query-cover", "85", "--subject-cover", "85", "-d", database_path, "-q", input_file, "-o", output_file, "-p", str(num_threads)]
+            subprocess.run(cmd)
+            # add column names to the output file
+            subprocess.run(f"echo 'qseqid\tsseqid\tpident' | cat - {output_file} > temp && mv temp {output_file}", shell=True)
 
 else:
-    print(f"Skipping prodigal command for kingdom {kingdom}")
-    
-#Diamond
-if kingdom == 'bacteria':
-	input_dir = "orf_prediction"
-	output_dir = "diamond"
-	database_path = "db/merops"
-	file_extension = ".faa"
-	num_threads = args.threads
-else:
-	input_dir = "genome/{kingdom}"
-	output_dir = "diamond"
-	database_path = "db/merops"
-	file_extension = ".faa"
-	num_threads = args.threads
-
-for file_name in os.listdir(input_dir):
-    if file_name.endswith(".faa"):
-        input_file = os.path.join(input_dir, file_name)
-        output_file = os.path.join(output_dir, f"{file_name[:-len(file_extension)]}.csv")
-        cmd = ["diamond", "blastp", "--more-sensitive", "-k", "1", "-f", "6", "qseqid", "sseqid", "pident", "--id", "90"
-, "--query-cover", "85", "--subject-cover", "85", "-d", database_path, "-q", input_file, "-o", output_file]
-        subprocess.run(cmd)
-        # add column names to the output file
-        subprocess.run(f"echo 'qseqid\tsseqid\tpident' | cat - {output_file} > temp && mv temp {output_file}", shell=True)
+    print(f"Invalid kingdom: {kingdom}. Please choose 'bacteria' or 'yeast'")
 
 # Set the directory containing the diamond output files
 diamond_dir = "diamond"
@@ -116,3 +125,35 @@ for file_name in os.listdir(directory_path):
                 # Run the `rpg` command using `os.system`
                 os.system(rpg_command)
 
+# Path to peptide directory
+peptide_dir = "peptide/"
+
+# List all fasta files in the peptide directory
+fasta_files = [file for file in os.listdir(peptide_dir) if file.endswith(".fasta")]
+
+# Create a dictionary to store the count of length ranges for each fasta file
+count_dict = {"Filename": [], "0-4": [], "5-20": [], "21-max": []}
+
+# Loop through all fasta files and count the length ranges
+for fasta_file in fasta_files:
+    with open(peptide_dir + fasta_file, "r") as f:
+        sequence_lengths = [len(line.strip()) for line in f.readlines()[1::2]]
+        count_dict["Filename"].append(fasta_file)
+        count_dict["0-4"].append(sum(1 for length in sequence_lengths if length <= 4))
+        count_dict["5-20"].append(sum(1 for length in sequence_lengths if 5 <= length <= 20))
+        count_dict["21-max"].append(sum(1 for length in sequence_lengths if length > 20))
+
+# Convert the dictionary to a pandas DataFrame
+df = pd.DataFrame.from_dict(count_dict)
+
+# Save the DataFrame to a table
+df.to_csv("peptide_length_ranges.csv", index=False)
+
+# iterate through all the fasta files in peptide directory
+for filename in os.listdir('peptide'):
+    if filename.endswith('.fasta'):
+        with open(f'peptide/{filename}', 'r') as f_in, \
+                open(f'filtered/{filename}', 'w') as f_out:
+            for record in SeqIO.parse(f_in, 'fasta'):
+                if len(record.seq) < 21:
+                    SeqIO.write(record, f_out, 'fasta')
