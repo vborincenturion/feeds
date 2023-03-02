@@ -10,7 +10,11 @@ import argparse
 from Bio import SeqIO
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='FEEDS: Food wastE biopEptiDe claSsifier: from genome to function')
+    parser = argparse.ArgumentParser(
+        description='FEEDS, Food wastE biopEptiDe claSsifier: from genome to function.',
+        epilog='Use the link https://github.com/vborincenturion/feeds for more information',
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument('-t', '--threads', type=int, default=1, help='Number of threads to use (default: 1)')
     parser.add_argument('-k', '--kingdom', choices=['bacteria', 'yeast'], required=True,
                         help='Genome file kingdom (choose "bacteria" or "yeast")')
