@@ -1,4 +1,4 @@
-# FEEDS: Food wastE biopEptiDe claSsifier: from genome to function
+# FEEDS, Food wastE biopEptiDe claSsifier: from genome to function
 
 FEEDS is a tool that takes in a bacteria genome and predicted proteins of yeast genomes to classify the secreted protease profile. It also digests protein substrate sequences to predict peptides. This tool is useful for identifying potential bioactive compounds in food waste and discovering novel applications for waste management.
 
