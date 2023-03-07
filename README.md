@@ -31,7 +31,7 @@ Finally, use the script "download_db.py" to download all the databases to run th
 
     feeds.py [-h | --help]
     
-    feeds.py [-t <num_threads>] [-k <kingdom>]
+    feeds.py [-t <num_threads>] [-k <kingdom>] [-f <filter>]
 
 Options:
 
@@ -40,6 +40,8 @@ Options:
     -t <num_threads>    Number of threads to use in the diamond tool [default: 1].
     
     -k <kingdom>       Kingdom of genome/protein file. "bacteria" will run the prodigal command to predict ORFs, "yeast" will skip this step. Required=True.
+    
+    -f <filter>        Filter peptide sequence with >20 aa. Required=True.
     
 Extension permitted
 - bacteria: ".fasta", ".fna", ".fa"
@@ -50,9 +52,9 @@ To use the tool, place the genome you wish to test into the genome folder of the
 
 Run the feeds.py script with the required options. For example, to run the tool with 4 threads and a bacteria genome file:
 
-```python feeds.py -t 4 -k bacteria``` 
+```python feeds.py -t 4 -k bacteria -f no``` 
 
-This will generate an output file with predicted peptides for the substrate sequence.
+This will generate an output file with predicted peptides for the substrate sequence without filter peptide with >20 aa.
 
 - Multiple genomes and substrate sequence files can be placed in the folders.
 - To use the tool for Yeast genomes, you need to provide the predicted ORFs of the genome, as Prodigal only predicts ORFs for bacteria.
