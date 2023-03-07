@@ -21,7 +21,7 @@ Then, install the required tools/packages:
 
 Clone this repository:
 
-```git clone https://github.com/vborincenturion/FEEDS.git```
+```git clone https://github.com/vborincenturion/feeds.git```
 
 Locate and change the "rpg_user.py" of your RapidPeptideGenerator tool for the one in the db folder of this github.
 
