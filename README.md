@@ -39,9 +39,9 @@ Options:
     
     -t <num_threads>    Number of threads to use in the diamond tool [default: 1].
     
-    -k <kingdom>       Kingdom of genome/protein file. "bacteria" will run the prodigal command to predict ORFs, "yeast" will skip this step. Required=True.
+    -k <kingdom>        Kingdom of genome/protein file. "bacteria" will run the prodigal command to predict ORFs, "yeast" will skip this step. Required=True.
     
-    -f <filter>        Filter peptide sequence with >20 aa. Required=True.
+    -f <filter>         Filter peptide sequence with >20 aa. Required=True.
     
 Extension permitted
 - bacteria: ".fasta", ".fna", ".fa"
