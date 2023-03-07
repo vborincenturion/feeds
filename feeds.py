@@ -18,6 +18,8 @@ def parse_args():
     parser.add_argument('-t', '--threads', type=int, default=1, help='Number of threads to use (default: 1)')
     parser.add_argument('-k', '--kingdom', choices=['bacteria', 'yeast'], required=True,
                         help='Genome file kingdom (choose "bacteria" or "yeast")')
+    parser.add_argument('-f', '--filter', choices=['yes', 'no'], required=True,
+                        help='Filter peptide sequence with >20')
     return parser.parse_args()
 
 
@@ -34,6 +36,9 @@ threads = args.threads
 
 kingdom = args.kingdom
 
+filter = args.filter
+
+#Prodigal
 if kingdom == 'bacteria':
     input_dir = f"genome/{kingdom}"
     output_dir = "orf_prediction"
@@ -154,6 +159,8 @@ df = pd.DataFrame.from_dict(count_dict)
 df.to_csv("peptide_length_ranges.csv", index=False)
 
 # iterate through all the fasta files in peptide directory
+if filter == 'yes':
+
 for filename in os.listdir('peptide'):
     if filename.endswith('.fasta'):
         with open(f'peptide/{filename}', 'r') as f_in, \
