@@ -19,7 +19,7 @@ def parse_args():
     parser.add_argument('-k', '--kingdom', choices=['bacteria', 'yeast'], required=True,
                         help='Genome file kingdom (choose "bacteria" or "yeast")')
     parser.add_argument('-f', '--filter', choices=['yes', 'no'], required=True,
-                        help='Filter peptide sequence with >20')
+                        help='Filter peptide sequence with >20 aa')
     return parser.parse_args()
 
 
