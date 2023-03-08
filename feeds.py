@@ -160,11 +160,10 @@ df.to_csv("peptide_length_ranges.csv", index=False)
 
 # iterate through all the fasta files in peptide directory
 if filter == 'yes':
-
-for filename in os.listdir('peptide'):
-    if filename.endswith('.fasta'):
-        with open(f'peptide/{filename}', 'r') as f_in, \
-                open(f'filtered/{filename}', 'w') as f_out:
-            for record in SeqIO.parse(f_in, 'fasta'):
-                if len(record.seq) < 21:
-                    SeqIO.write(record, f_out, 'fasta')
+    for filename in os.listdir('peptide'):
+        if filename.endswith('.fasta'):
+            with open(f'peptide/{filename}', 'r') as f_in, \
+                    open(f'filtered/{filename}', 'w') as f_out:
+                for record in SeqIO.parse(f_in, 'fasta'):
+                    if len(record.seq) < 21:
+                        SeqIO.write(record, f_out, 'fasta')
