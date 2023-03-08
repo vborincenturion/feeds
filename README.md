@@ -18,6 +18,7 @@ Then, install the required tools/packages:
 - Diamond - ```conda install -c bioconda diamond```
 - RapidPeptideGeneration - ```pip3 install rpg```
 - Pandas - ```conda install -c anaconda pandas```
+- Biopython - ```conda install -c conda-forge biopython```
 
 Clone this repository:
 
