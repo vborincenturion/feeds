@@ -151,7 +151,7 @@ for fasta_file in fasta_files:
         count_dict["0-4"].append(sum(1 for length in sequence_lengths if length <= 4))
         count_dict["5-20"].append(sum(1 for length in sequence_lengths if 5 <= length <= 20))
         count_dict["21-100"].append(sum(1 for length in sequence_lengths if 21 <= length <= 100))
-        count_dict["101-max"].append(sum(1 for length in sequence_lengths if length > 101))
+        count_dict["101-Max"].append(sum(1 for length in sequence_lengths if length > 100))
         count_dict["Total Sequences"].append(len(sequence_lengths))
 
 # Convert the dictionary to a pandas DataFrame
