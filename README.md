@@ -32,7 +32,7 @@ Finally, use the script "download_db.py" to download all the databases to run th
 
     feeds.py [-h | --help]
     
-    feeds.py [-t <num_threads>] [-k <kingdom>] [-f <filter>]
+    feeds.py [-t <num_threads>] [-k <kingdom>] [-f <filter>] [-d <digest>]
 
 Options:
 
@@ -44,6 +44,8 @@ Options:
     
     -f <filter>         Filter peptide sequence with >20 aa. ["yes" or "no"]. Required=True.
     
+    -d <digest>         Digestion mode of RapidPeptideGenerator tool. ["s" or "c"]. Required=True.
+    
 Extension permitted
 - bacteria: ".fasta", ".fna", ".fa"
 - yeast: ".fasta", ".faa"
@@ -53,9 +55,9 @@ To use the tool, place the genome you wish to test into the genome folder of the
 
 Run the feeds.py script with the required options. For example, to run the tool with 4 threads and a bacteria genome file:
 
-```python feeds.py -t 4 -k bacteria -f no``` 
+```python feeds.py -t 4 -k bacteria -f no -d s``` 
 
-This will generate an output file with predicted peptides for the substrate sequence without filter peptides with >20 aa.
+This will generate an output file with predicted peptides digested by each enzyme for the substrate sequence without filter peptides with >20 aa.
 
 - Multiple genomes and substrate sequence files can be placed in the folders.
 - To use the tool for Yeast genomes, you need to provide the predicted ORFs of the genome, as Prodigal only predicts ORFs for bacteria.
