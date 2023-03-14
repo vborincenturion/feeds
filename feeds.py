@@ -20,6 +20,8 @@ def parse_args():
                         help='Genome file kingdom (choose "bacteria" or "yeast")')
     parser.add_argument('-f', '--filter', choices=['yes', 'no'], required=True,
                         help='Filter peptide sequence with >20 aa')
+    parser.add_argument('-d', '--digest', choices=['s', 'c'], required=True,
+                        help='"s" sequential mode and "c" concurrent mode of RapidPeptideGenerator tool')
     return parser.parse_args()
 
 
@@ -37,6 +39,8 @@ threads = args.threads
 kingdom = args.kingdom
 
 filter = args.filter
+
+digest = args.digest
 
 #Prodigal
 if kingdom == 'bacteria':
@@ -125,6 +129,7 @@ for file_name in os.listdir(directory_path):
         # Extract the RPG_CS values (excluding "no-secrete" and "no-info" and NA or nan values) for this file
         rpg_cs_values = extract_rpg_cs_values(file_path)
 
+if digest == 'c':
         # Loop over all fasta files in the `substrate` directory
         for substrate_file_name in os.listdir('substrate'):
             if substrate_file_name.endswith('.fasta'):
@@ -134,6 +139,16 @@ for file_name in os.listdir(directory_path):
                 # Run the `rpg` command using `os.system`
                 os.system(rpg_command)
 
+elif digest == 's':
+         # Loop over all fasta files in the `substrate` directory
+        for substrate_file_name in os.listdir('substrate'):
+            if substrate_file_name.endswith('.fasta'):
+                # Generate the `rpg` command with the input and output file names and paths, the `-e` option with the RPG_CS values for this file, and the `-d` option with the actual database name
+                rpg_command = f"rpg -i substrate/{substrate_file_name} -o peptide/{file_name[:-4]}_{substrate_file_name[:-6]}_peptide.fasta -e {'    '.join(rpg_cs_values)} -d s"
+                
+                # Run the `rpg` command using `os.system`
+                os.system(rpg_command)   
+                
 # Path to peptide directory
 peptide_dir = "peptide/"
 
