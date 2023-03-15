@@ -120,34 +120,43 @@ def extract_rpg_cs_values(file_path):
 directory_path = 'merged/diamond/'
 
 ## Loop over all files in the directory
-for file_name in os.listdir(directory_path):
-    # Check if the file has the `_merged.csv` extension
-    if file_name.endswith('_merged.csv'):
-        # Construct the full file path
-        file_path = os.path.join(directory_path, file_name)
-
-        # Extract the RPG_CS values (excluding "no-secrete" and "no-info" and NA or nan values) for this file
-        rpg_cs_values = extract_rpg_cs_values(file_path)
-
 if digest == 'c':
-        # Loop over all fasta files in the `substrate` directory
-        for substrate_file_name in os.listdir('substrate'):
-            if substrate_file_name.endswith('.fasta'):
-                # Generate the `rpg` command with the input and output file names and paths, the `-e` option with the RPG_CS values for this file, and the `-d` option with the actual database name
-                rpg_command = f"rpg -i substrate/{substrate_file_name} -o peptide/{file_name[:-4]}_{substrate_file_name[:-6]}_peptide.fasta -e {'    '.join(rpg_cs_values)} -d c"
+    for file_name in os.listdir(directory_path):
+        # Check if the file has the `_merged.csv` extension
+        if file_name.endswith('_merged.csv'):
+            # Construct the full file path
+            file_path = os.path.join(directory_path, file_name)
+
+            # Extract the RPG_CS values (excluding "no-secrete" and "no-info" and NA or nan values) for this file
+            rpg_cs_values = extract_rpg_cs_values(file_path)
+
+            # Loop over all fasta files in the `substrate` directory
+            for substrate_file_name in os.listdir('substrate'):
+                if substrate_file_name.endswith('.fasta'):
+                    # Generate the `rpg` command with the input and output file names and paths, the `-e` option with the RPG_CS values for this file, and the `-d` option with the actual database name
+                    rpg_command = f"rpg -i substrate/{substrate_file_name} -o peptide/{file_name[:-4]}_{substrate_file_name[:-6]}_peptide.fasta -e {'    '.join(rpg_cs_values)} -d c"
                 
-                # Run the `rpg` command using `os.system`
-                os.system(rpg_command)
+                    # Run the `rpg` command using `os.system`
+                    os.system(rpg_command)
 
 elif digest == 's':
-         # Loop over all fasta files in the `substrate` directory
-        for substrate_file_name in os.listdir('substrate'):
-            if substrate_file_name.endswith('.fasta'):
-                # Generate the `rpg` command with the input and output file names and paths, the `-e` option with the RPG_CS values for this file, and the `-d` option with the actual database name
-                rpg_command = f"rpg -i substrate/{substrate_file_name} -o peptide/{file_name[:-4]}_{substrate_file_name[:-6]}_peptide.fasta -e {'    '.join(rpg_cs_values)} -d s"
+    for file_name in os.listdir(directory_path):
+        # Check if the file has the `_merged.csv` extension
+        if file_name.endswith('_merged.csv'):
+            # Construct the full file path
+            file_path = os.path.join(directory_path, file_name)
+
+            # Extract the RPG_CS values (excluding "no-secrete" and "no-info" and NA or nan values) for this file
+            rpg_cs_values = extract_rpg_cs_values(file_path)
+            
+            # Loop over all fasta files in the `substrate` directory
+            for substrate_file_name in os.listdir('substrate'):
+                if substrate_file_name.endswith('.fasta'):
+                    # Generate the `rpg` command with the input and output file names and paths, the `-e` option with the RPG_CS values for this file, and the `-d` option with the actual database name
+                    rpg_command = f"rpg -i substrate/{substrate_file_name} -o peptide/{file_name[:-4]}_{substrate_file_name[:-6]}_peptide.fasta -e {'    '.join(rpg_cs_values)} -d s"
                 
-                # Run the `rpg` command using `os.system`
-                os.system(rpg_command)   
+                    # Run the `rpg` command using `os.system`
+                    os.system(rpg_command)   
                 
 # Path to peptide directory
 peptide_dir = "peptide/"
