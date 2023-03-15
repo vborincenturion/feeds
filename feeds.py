@@ -165,7 +165,7 @@ peptide_dir = "peptide/"
 fasta_files = [file for file in os.listdir(peptide_dir) if file.endswith(".fasta")]
 
 # Create a dictionary to store the count of length ranges for each fasta file
-count_dict = {"Filename": [], "1-4": [], "5-20": [], "21-100": [], "101-Max": [], "Total Sequences": []}
+count_dict = {"Filename": [], "1-4": [], "5-20": [], "21-100": [], "101-Max": [], "Total Sequences": [], "Max Length": []}
 
 # Loop through all fasta files and count the length ranges
 for fasta_file in fasta_files:
@@ -177,6 +177,7 @@ for fasta_file in fasta_files:
         count_dict["21-100"].append(sum(1 for length in sequence_lengths if 21 <= length <= 100))
         count_dict["101-Max"].append(sum(1 for length in sequence_lengths if length > 100))
         count_dict["Total Sequences"].append(len(sequence_lengths))
+        count_dict["Max Length"].append(max(sequence_lengths))
 
 # Convert the dictionary to a pandas DataFrame
 df = pd.DataFrame.from_dict(count_dict)
