@@ -113,10 +113,11 @@ def extract_rpg_cs_values(file_path):
     
     # Extract the unique and numeric characters from the RPG_CS column
     rpg_cs_values = set(df['RPG_CS'].dropna().unique()) - {"no-secrete", "no-info"}
+    print("List of RPG_CS values:", rpg_cs_values)
     
     # Return the result as a set of characters
     return sorted(list(rpg_cs_values))
-
+    
 directory_path = 'merged/diamond/'
 
 ## Loop over all files in the directory
@@ -165,17 +166,26 @@ peptide_dir = "peptide/"
 fasta_files = [file for file in os.listdir(peptide_dir) if file.endswith(".fasta")]
 
 # Create a dictionary to store the count of length ranges for each fasta file
-count_dict = {"Filename": [], "1-4": [], "5-20": [], "21-100": [], "101-Max": [], "Total Sequences": [], "Max Length": []}
+count_dict = {"Filename": [], "1-4 aa": [], "5-20 aa": [], "21-100 aa": [], "101-Max aa": [], "Total Sequences": [], "Max Length": []}
 
 # Loop through all fasta files and count the length ranges
 for fasta_file in fasta_files:
     with open(peptide_dir + fasta_file, "r") as f:
-        sequence_lengths = [len(line.strip()) for line in f.readlines()[1::2]]
+        sequence_lengths = []
+        sequence = ""
+        for line in f:
+            if line.startswith(">"):
+                if sequence:
+                    sequence_lengths.append(len(sequence))
+                    sequence = ""
+            else:
+                sequence += line.strip()
+        sequence_lengths.append(len(sequence))
         count_dict["Filename"].append(fasta_file)
-        count_dict["1-4"].append(sum(1 for length in sequence_lengths if length <= 4))
-        count_dict["5-20"].append(sum(1 for length in sequence_lengths if 5 <= length <= 20))
-        count_dict["21-100"].append(sum(1 for length in sequence_lengths if 21 <= length <= 100))
-        count_dict["101-Max"].append(sum(1 for length in sequence_lengths if length > 100))
+        count_dict["1-4 aa"].append(sum(1 for length in sequence_lengths if length <= 4))
+        count_dict["5-20 aa"].append(sum(1 for length in sequence_lengths if 5 <= length <= 20))
+        count_dict["21-100 aa"].append(sum(1 for length in sequence_lengths if 21 <= length <= 100))
+        count_dict["101-Max aa"].append(sum(1 for length in sequence_lengths if length > 100))
         count_dict["Total Sequences"].append(len(sequence_lengths))
         count_dict["Max Length"].append(max(sequence_lengths))
 
