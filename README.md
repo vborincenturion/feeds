@@ -1,6 +1,6 @@
 # FEEDS, Food wastE biopEptiDe claSsifier: from genome to function
 
-FEEDS is a tool that takes in a bacteria genome and predicted proteins of yeast genomes to classify the secreted protease profile. It also digests protein substrate sequences to predict peptides. This tool is useful for identifying potential bioactive compounds in food waste and discovering novel applications for waste management.
+FEEDS is a tool that takes a bacteria genome and predicted proteins of yeast genomes to classify the secreted protease profile. It also digests protein substrate sequences to predict peptides and classify the biopeptide sequences with a novel machine learning method. This tool is useful for identifying potential bioactive compounds in food and discovering novel applications for waste management.
 
 ## Install
 
@@ -57,7 +57,7 @@ Run the feeds.py script with the required options. For example, to run the tool 
 
 ```python feeds.py -t 4 -k bacteria -f no -d s``` 
 
-This will generate an output file with predicted peptides digested by each enzyme for the substrate sequence without filter peptides with >20 aa.
+This will generate a table with the protease genome profile, an output fasta file with the predicted peptides digested by each secreted genome enzyme without filter (>20 aa) and a table with the biopeptide classification.
 
 - Multiple genomes and substrate sequence files can be placed in the folders.
-- To use the tool for Yeast genomes, you need to provide the predicted ORFs of the genome, as Prodigal only predicts ORFs for bacteria.
+- To use the tool for Yeast genomes, users need to provide the predicted ORFs of the genome, as Prodigal only predicts ORFs for bacteria.
