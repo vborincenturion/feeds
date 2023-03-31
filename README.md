@@ -49,7 +49,7 @@ Options:
 Extension permitted
 - bacteria: ".fasta", ".fna", ".fa"
 - yeast: ".fasta", ".faa"
-- substrate: ".fasta"
+- substrate: ".fasta", ".faa"
 
 To use the tool, place the genome you wish to test into the genome folder of the corresponding kingdom. Then, add the substrate protein sequence FASTA file into the substrate folder.
 
