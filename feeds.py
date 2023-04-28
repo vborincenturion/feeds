@@ -112,7 +112,7 @@ def extract_rpg_cs_values(file_path):
     df = pd.read_csv(file_path, delimiter=',')
     
     # Extract the unique and numeric characters from the RPG_CS column
-    rpg_cs_values = set(df['RPG_CS'].dropna().unique()) - {"no-secrete", "no-info"}
+    rpg_cs_values = set(df['RPG_CS'].dropna().unique()) - {"no-secrete", "no-info", "peptidase-inhibitor"}
     print("List of RPG_CS values:", rpg_cs_values)
     
     # Return the result as a set of characters
