@@ -42,7 +42,7 @@ Options:
     
     -k <kingdom>        Kingdom of genome/protein file. "bacteria" will run the prodigal command to predict ORFs, "yeast" will skip this step. Required=True.
     
-    -f_length <filter_length>         Filter peptide sequence by the length. Required=No.
+    -f_length <filter_length>         Filter peptide sequence by the length (aa number). Required=No.
     
     -f_mol <filter_weight>         Filter peptide sequence by the molecular weight (KDal). Required=No.
     
