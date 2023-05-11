@@ -38,7 +38,7 @@ threads = args.threads
 
 kingdom = args.kingdom
 
-filter = args.filter
+filter_length = args.filter_length
 
 digest = args.digest
 
@@ -195,14 +195,16 @@ df = pd.DataFrame.from_dict(count_dict)
 # Save the DataFrame to a table
 df.to_csv("peptide_length_ranges.csv", index=False)
 
-# set minimum length for filtering
-min_length = args.filter_length or 0
+# Filter sequences by length
+if filter_length:
+    input_dir = "peptide"
+    output_dir = "filtered"
 
-# iterate through all the fasta files in peptide directory
-    for filename in os.listdir('peptide'):
-        if filename.endswith('.fasta'):
-            with open(f'peptide/{filename}', 'r') as f_in, \
-                    open(f'filtered/{filename}', 'w') as f_out:
-                for record in SeqIO.parse(f_in, 'fasta'):
-                    if len(record.seq) < 21:
-                        SeqIO.write(record, f_out, 'fasta')
+    for filename in os.listdir(input_dir):
+        if filename.endswith(".fasta"):
+            input_file = os.path.join(input_dir, filename)
+            output_file = os.path.join(output_dir, filename)
+            with open(input_file, "r") as f, open(output_file, "w") as out:
+                for record in SeqIO.parse(f, "fasta"):
+                    if len(record.seq) < filter_length:
+                        SeqIO.write(record, out, "fasta")
