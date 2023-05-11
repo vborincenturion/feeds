@@ -248,7 +248,7 @@ for fasta_file in fasta_files:
         count_dict_w["3-5 kDa"].append(sum(1 for weight in sequence_weights if 3000 < weight <= 5000))
         count_dict_w["5-10 kDa"].append(sum(1 for weight in sequence_weights if 5000 < weight <= 10000))
         count_dict_w["Total Sequences"].append(len(sequence_weights))
-        count_dict_w["Max Length"].append(max(sequence_lengths))
+        count_dict_w["Max Weight"].append(max(sequence_lengths))
 
 # Convert the dictionary to a pandas DataFrame
 df_w = pd.DataFrame.from_dict(count_dict_w)
