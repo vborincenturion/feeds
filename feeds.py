@@ -223,7 +223,7 @@ amino_acid_weights = {
 }
 
 # Create a dictionary to store the count of length ranges for each fasta file
-count_dict_w = {"Filename": [], "0-1 kDa": [], "2-3 kDa": [], "3-5 kDa": [], "5-10 kDa": [], "Total Sequences": [], "Max Weight": []}
+count_dict_w = {"Filename": [], "0-1 kDa": [], "1-3 kDa": [], "3-5 kDa": [], "5-10 kDa": [], "Total Sequences": [], "Max Weight": []}
 
 # Loop through all fasta files and count the molecular weight ranges
 for fasta_file in fasta_files:
