@@ -269,5 +269,6 @@ if filter_mol:
                 for record in SeqIO.parse(f, "fasta"):
                     seq = str(record.seq)
                     mol_weight = sum(amino_acid_weights.get(aa, 0) for aa in seq)
-                    if mol_weight <= filter_mol:
+                    kda_weight = mol_weight / 1000
+                    if kda_weight <= filter_mol:
                         SeqIO.write(record, out, "fasta")
