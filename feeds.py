@@ -256,4 +256,17 @@ df_w = pd.DataFrame.from_dict(count_dict_w)
 # Save the DataFrame to a table
 df_w.to_csv("peptide_weight_ranges.csv", index=False)
 
-    
+# Filter sequences by molecular weight
+if filter_mol:
+    input_dir = "peptide"
+    output_dir = "filtered/weight"
+
+    for filename in os.listdir(input_dir):
+    if filename.endswith(".fasta"):
+        input_file = os.path.join(input_dir, filename)
+        output_file = os.path.join(output_dir, filename)
+        with open(input_file, "r") as f, open(output_file, "w") as out:
+            for record in SeqIO.parse(f, "fasta"):
+                mw = molecular_weight(record.seq, "protein") / 1000  # Calculate molecular weight in kDa
+                if mw < filter_mw:
+                    SeqIO.write(record, out, "fasta")
