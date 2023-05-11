@@ -203,7 +203,7 @@ df_l.to_csv("peptide_length_ranges.csv", index=False)
 # Filter sequences by length
 if filter_length:
     input_dir = "peptide"
-    output_dir = "filtered"
+    output_dir = "filtered/length"
 
     for filename in os.listdir(input_dir):
         if filename.endswith(".fasta"):
