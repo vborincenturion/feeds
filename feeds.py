@@ -8,6 +8,7 @@ import pandas as pd
 import glob
 import argparse
 from Bio import SeqIO
+from Bio.SeqUtils.ProtParam import ProteinAnalysis
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -20,13 +21,15 @@ def parse_args():
                         help='Genome file kingdom (choose "bacteria" or "yeast")')
     parser.add_argument('-f_length', '--filter_length', type=int,
                     help='Filter peptide sequence with a minimum length')
+    parser.add_argument('-f_mol', '--filter_mol', type=int,
+                    help='Filter peptide sequence with a minimum molecular weight')
     parser.add_argument('-d', '--digest', choices=['s', 'c'], required=True,
                         help='"s" sequential mode and "c" concurrent mode of RapidPeptideGenerator tool')
     return parser.parse_args()
 
 
 # Define the required directories
-directories = ['diamond', 'orf_prediction', 'merged', 'merged/diamond', 'peptide', 'filtered']
+directories = ['diamond', 'orf_prediction', 'merged', 'merged/diamond', 'peptide', 'filtered', 'filtered/length', 'filtered/weight']
 
 # Create the directories if they do not exist
 for directory in directories:
@@ -39,6 +42,8 @@ threads = args.threads
 kingdom = args.kingdom
 
 filter_length = args.filter_length
+
+filter_mol = args.filter_mol
 
 digest = args.digest
 
@@ -166,7 +171,7 @@ peptide_dir = "peptide/"
 fasta_files = [file for file in os.listdir(peptide_dir) if file.endswith(".fasta")]
 
 # Create a dictionary to store the count of length ranges for each fasta file
-count_dict = {"Filename": [], "1-4 aa": [], "5-20 aa": [], "21-100 aa": [], "101-Max aa": [], "Total Sequences": [], "Max Length": []}
+count_dict_l = {"Filename": [], "1-4 aa": [], "5-20 aa": [], "21-100 aa": [], "101-Max aa": [], "Total Sequences": [], "Max Length": []}
 
 # Loop through all fasta files and count the length ranges
 for fasta_file in fasta_files:
@@ -181,19 +186,19 @@ for fasta_file in fasta_files:
             else:
                 sequence += line.strip()
         sequence_lengths.append(len(sequence))
-        count_dict["Filename"].append(fasta_file)
-        count_dict["1-4 aa"].append(sum(1 for length in sequence_lengths if length <= 4))
-        count_dict["5-20 aa"].append(sum(1 for length in sequence_lengths if 5 <= length <= 20))
-        count_dict["21-100 aa"].append(sum(1 for length in sequence_lengths if 21 <= length <= 100))
-        count_dict["101-Max aa"].append(sum(1 for length in sequence_lengths if length > 100))
-        count_dict["Total Sequences"].append(len(sequence_lengths))
-        count_dict["Max Length"].append(max(sequence_lengths))
+        count_dict_l["Filename"].append(fasta_file)
+        count_dict_l["1-4 aa"].append(sum(1 for length in sequence_lengths if length <= 4))
+        count_dict_l["5-20 aa"].append(sum(1 for length in sequence_lengths if 5 <= length <= 20))
+        count_dict_l["21-100 aa"].append(sum(1 for length in sequence_lengths if 21 <= length <= 100))
+        count_dict_l["101-Max aa"].append(sum(1 for length in sequence_lengths if length > 100))
+        count_dict_l["Total Sequences"].append(len(sequence_lengths))
+        count_dict_l["Max Length"].append(max(sequence_lengths))
 
 # Convert the dictionary to a pandas DataFrame
-df = pd.DataFrame.from_dict(count_dict)
+df_l = pd.DataFrame.from_dict(count_dict_l)
 
 # Save the DataFrame to a table
-df.to_csv("peptide_length_ranges.csv", index=False)
+df_l.to_csv("peptide_length_ranges.csv", index=False)
 
 # Filter sequences by length
 if filter_length:
@@ -208,3 +213,47 @@ if filter_length:
                 for record in SeqIO.parse(f, "fasta"):
                     if len(record.seq) < filter_length:
                         SeqIO.write(record, out, "fasta")
+  
+# Create a dictionary of amino acids and their corresponding molecular weights
+amino_acid_weights = {
+    'A': 71.08, 'R': 156.19, 'N': 114.11, 'D': 115.09, 'C': 103.15, 'E': 129.12,
+    'Q': 128.13, 'G': 57.05, 'H': 137.14, 'I': 113.16, 'L': 113.16, 'K': 128.17,
+    'M': 131.20, 'F': 147.18, 'P': 97.12, 'S': 87.08, 'T': 101.11, 'W': 186.21,
+    'Y': 163.18, 'V': 99.13
+}
+
+# Create a dictionary to store the count of length ranges for each fasta file
+count_dict_w = {"Filename": [], "0-1 kDa": [], "2-3 kDa": [], "3-5 kDa": [], "5-10 kDa": [], "Total Sequences": [], "Max Weight": []}
+
+# Loop through all fasta files and count the molecular weight ranges
+for fasta_file in fasta_files:
+    with open(peptide_dir + fasta_file, "r") as f:
+        sequence_weights = []
+        sequence = ""
+        for line in f:
+            if line.startswith(">"):
+                if sequence:
+                    # Calculate the molecular weight of the sequence
+                    pa = ProteinAnalysis(sequence)
+                    sequence_weights.append(pa.molecular_weight())
+                    sequence = ""
+            else:
+                sequence += line.strip()
+        # Calculate the molecular weight of the last sequence
+        pa = ProteinAnalysis(sequence)
+        sequence_weights.append(pa.molecular_weight())
+        count_dict_w["Filename"].append(fasta_file)
+        count_dict_w["0-1 kDa"].append(sum(1 for weight in sequence_weights if weight <= 1000))
+        count_dict_w["1-3 kDa"].append(sum(1 for weight in sequence_weights if 1000 < weight <= 3000))
+        count_dict_w["3-5 kDa"].append(sum(1 for weight in sequence_weights if 3000 < weight <= 5000))
+        count_dict_w["5-10 kDa"].append(sum(1 for weight in sequence_weights if 5000 < weight <= 10000))
+        count_dict_w["Total Sequences"].append(len(sequence_weights))
+        count_dict_w["Max Length"].append(max(sequence_lengths))
+
+# Convert the dictionary to a pandas DataFrame
+df_w = pd.DataFrame.from_dict(count_dict_w)
+
+# Save the DataFrame to a table
+df_w.to_csv("peptide_weight_ranges.csv", index=False)
+
+    
