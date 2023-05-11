@@ -21,7 +21,7 @@ def parse_args():
                         help='Genome file kingdom (choose "bacteria" or "yeast")')
     parser.add_argument('-f_length', '--filter_length', type=int,
                     help='Filter peptide sequence with a minimum length')
-    parser.add_argument('-f_mol', '--filter_mol', type=int,
+    parser.add_argument('-f_mol', '--filter_mol', type=float,
                     help='Filter peptide sequence with a minimum molecular weight')
     parser.add_argument('-d', '--digest', choices=['s', 'c'], required=True,
                         help='"s" sequential mode and "c" concurrent mode of RapidPeptideGenerator tool')
@@ -211,7 +211,7 @@ if filter_length:
             output_file = os.path.join(output_dir, filename)
             with open(input_file, "r") as f, open(output_file, "w") as out:
                 for record in SeqIO.parse(f, "fasta"):
-                    if len(record.seq) < filter_length:
+                    if len(record.seq) <= filter_length:
                         SeqIO.write(record, out, "fasta")
   
 # Create a dictionary of amino acids and their corresponding molecular weights
@@ -267,6 +267,7 @@ if filter_mol:
             output_file = os.path.join(output_dir, filename)
             with open(input_file, "r") as f, open(output_file, "w") as out:
                 for record in SeqIO.parse(f, "fasta"):
-                    mw = molecular_weight(record.seq, "protein") / 1000  # Calculate molecular weight in kDa
-                    if mw < filter_mol:
-                            SeqIO.write(record, out, "fasta")
+                    seq = str(record.seq)
+                    mol_weight = sum(amino_acid_weights.get(aa, 0) for aa in seq)
+                    if mol_weight <= filter_mol:
+                        SeqIO.write(record, out, "fasta")
