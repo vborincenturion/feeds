@@ -268,5 +268,5 @@ if filter_mol:
             with open(input_file, "r") as f, open(output_file, "w") as out:
                 for record in SeqIO.parse(f, "fasta"):
                     mw = molecular_weight(record.seq, "protein") / 1000  # Calculate molecular weight in kDa
-                    if mw < filter_mw:
+                    if mw < filter_mol:
                             SeqIO.write(record, out, "fasta")
