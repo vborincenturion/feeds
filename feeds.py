@@ -18,8 +18,8 @@ def parse_args():
     parser.add_argument('-t', '--threads', type=int, default=1, help='Number of threads to use (default: 1)')
     parser.add_argument('-k', '--kingdom', choices=['bacteria', 'yeast'], required=True,
                         help='Genome file kingdom (choose "bacteria" or "yeast")')
-    parser.add_argument('-f', '--filter', choices=['yes', 'no'], required=True,
-                        help='Filter peptide sequence with >20 aa')
+    parser.add_argument('-f_length', '--filter_length', type=int,
+                    help='Filter peptide sequence with a minimum length')
     parser.add_argument('-d', '--digest', choices=['s', 'c'], required=True,
                         help='"s" sequential mode and "c" concurrent mode of RapidPeptideGenerator tool')
     return parser.parse_args()
@@ -195,8 +195,10 @@ df = pd.DataFrame.from_dict(count_dict)
 # Save the DataFrame to a table
 df.to_csv("peptide_length_ranges.csv", index=False)
 
+# set minimum length for filtering
+min_length = args.filter_length or 0
+
 # iterate through all the fasta files in peptide directory
-if filter == 'yes':
     for filename in os.listdir('peptide'):
         if filename.endswith('.fasta'):
             with open(f'peptide/{filename}', 'r') as f_in, \
