@@ -28,8 +28,10 @@ Locate and change the "rpg_user.py" of your RapidPeptideGenerator tool for the o
 
 Finally, use the script "download_db.py" to download all the databases to run the feeds tool.
 - Make sure to have the ".py" files usage for all users: 
-    chmod 777 download_db.py
-    chmod 777 feeds.py
+   
+   chmod 777 download_db.py
+   
+   chmod 777 feeds.py
 
 ## Usage
 
