@@ -13,6 +13,7 @@ url = 'https://figshare.com/ndownloader/articles/22194535/versions/4'
 
 # Name of the file to download
 filename = '22194535.zip'
+filename_m = 'Models.zip'
 
 # Define the callback function to show the download progress
 def reporthook(count, block_size, total_size):
@@ -28,3 +29,10 @@ with zipfile.ZipFile(os.path.join('db', filename), 'r') as zip_ref:
 
 # Remove the ZIP file
 os.remove(os.path.join('db', filename))
+
+# Unzip the downloaded file
+with zipfile.ZipFile(os.path.join('db', filename_m), 'r') as zip_ref:
+    zip_ref.extractall('db')
+
+# Remove the ZIP file
+os.remove(os.path.join('db', filename_m))
