@@ -29,7 +29,7 @@ def parse_args():
 
 
 # Define the required directories
-directories = ['diamond', 'orf_prediction', 'merged', 'merged/diamond', 'peptide', 'filtered', 'filtered/length', 'filtered/weight']
+directories = ['diamond', 'orf_prediction', 'merged', 'merged/diamond', 'peptide', 'results', 'results/filtered', 'results/no_filtered']
 
 # Create the directories if they do not exist
 for directory in directories:
@@ -140,7 +140,7 @@ if digest == 'c':
             for substrate_file_name in os.listdir('substrate'):
                 if substrate_file_name.endswith('.fasta') or substrate_file_name.endswith('.faa'):
                     # Generate the `rpg` command with the input and output file names and paths, the `-e` option with the RPG_CS values for this file, and the `-d` option with the actual database name
-                    rpg_command = f"rpg -i substrate/{substrate_file_name} -o peptide/{file_name[:-4]}_{substrate_file_name[:-6]}_peptide.fasta -e {'    '.join(rpg_cs_values)} -d c"
+                    rpg_command = f"rpg -i substrate/{substrate_file_name} -o results/no_filtered/{file_name[:-4]}_{substrate_file_name[:-6]}_peptide.fasta -e {'    '.join(rpg_cs_values)} -d c"
                 
                     # Run the `rpg` command using `os.system`
                     os.system(rpg_command)
@@ -159,13 +159,13 @@ elif digest == 's':
             for substrate_file_name in os.listdir('substrate'):
                 if substrate_file_name.endswith('.fasta') or substrate_file_name.endswith('.faa'):
                     # Generate the `rpg` command with the input and output file names and paths, the `-e` option with the RPG_CS values for this file, and the `-d` option with the actual database name
-                    rpg_command = f"rpg -i substrate/{substrate_file_name} -o peptide/{file_name[:-4]}_{substrate_file_name[:-6]}_peptide.fasta -e {'    '.join(rpg_cs_values)} -d s"
+                    rpg_command = f"rpg -i substrate/{substrate_file_name} -o presults/no_filtered/{file_name[:-4]}_{substrate_file_name[:-6]}_peptide.fasta -e {'    '.join(rpg_cs_values)} -d s"
                 
                     # Run the `rpg` command using `os.system`
                     os.system(rpg_command)   
                 
 # Path to peptide directory
-peptide_dir = "peptide/"
+peptide_dir = "results/no_filtered/"
 
 # List all fasta files in the peptide directory
 fasta_files = [file for file in os.listdir(peptide_dir) if file.endswith(".fasta")]
@@ -202,8 +202,8 @@ df_l.to_csv("peptide_length_ranges.csv", index=False)
 
 # Filter sequences by length
 if filter_length:
-    input_dir = "peptide"
-    output_dir = "filtered/length"
+    input_dir = "results/no_filtered"
+    output_dir = "results/filtered"
 
     for filename in os.listdir(input_dir):
         if filename.endswith(".fasta"):
@@ -258,8 +258,8 @@ df_w.to_csv("peptide_weight_ranges.csv", index=False)
 
 # Filter sequences by molecular weight
 if filter_mol:
-    input_dir = "peptide"
-    output_dir = "filtered/weight"
+    input_dir = "results/no_filtered"
+    output_dir = "results/filtered"
 
     for filename in os.listdir(input_dir):
         if filename.endswith(".fasta"):
