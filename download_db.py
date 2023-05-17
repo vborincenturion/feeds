@@ -9,7 +9,7 @@ if not os.path.exists('db'):
     os.makedirs('db')
 
 # URL of the file to download
-url = 'https://figshare.com/ndownloader/articles/22194535/versions/3'
+url = 'https://figshare.com/ndownloader/articles/22194535/versions/4'
 
 # Name of the file to download
 filename = '22194535.zip'
