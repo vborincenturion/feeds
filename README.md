@@ -63,3 +63,12 @@ This will generate a table with the protease genome profile, an output fasta fil
 
 - Multiple genomes and substrate sequence files can be placed in the folders.
 - To use the tool for Yeast genomes, users need to provide the predicted ORFs of the genome, as Prodigal only predicts ORFs for bacteria.
+
+## Output
+
+- merged/diamond/: MEROPS ORFs annotation with the RapidPeptideGenerator enzyme ID (RPG_CS column)
+- peptide_length_ranges.csv: peptide length range information generated after the digestion mode
+- peptide_weight_ranges.csv: peptide molecular weight range information generated after the digestion mode
+- results/no_filtered/: all peptides sequence files generated after the digestion mode without length or weight filter
+- results/filtered/: all peptides sequence files generated after the digestion mode with length or weight filter
+- results/prediction/: results of machine learning class predictions
