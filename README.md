@@ -55,7 +55,7 @@ Extension permitted
 
 To use the tool, place the genome you wish to test into the genome folder of the corresponding kingdom. Then, add the substrate protein sequence FASTA file into the substrate folder.
 
-Run the feeds.py script with the required options. For example, to run the tool with 4 threads, a bacteria genome file, without filter and in sequential digestion mode, use:
+Run the feeds.py script with the required options. For example, to run the tool with 4 threads, a bacteria genome file, with a molecular weight filter and in sequential digestion mode, use:
 
 ```python feeds.py -t 4 -k bacteria -f_mol 4 -d s``` 
 
