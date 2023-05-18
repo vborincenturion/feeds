@@ -34,7 +34,7 @@ def parse_args():
 
 
 # Define the required directories
-directories = ['diamond', 'orf_prediction', 'merged', 'merged/diamond', 'peptide', 'results', 'results/filtered', 'results/no_filtered']
+directories = ['diamond', 'orf_prediction', 'merged', 'merged/diamond', 'peptide', 'results', 'results/filtered', 'results/no_filtered', 'results/prediction']
 
 # Create the directories if they do not exist
 for directory in directories:
@@ -61,7 +61,7 @@ if kingdom == 'bacteria':
     for file_name in os.listdir(input_dir):
         if file_name.endswith(file_extension):
             input_file = os.path.join(input_dir, file_name)
-            output_file = os.path.join(output_dir, f"{file_name[:-len(file_extension)]}.faa")
+            output_file = os.path.join(output_dir, f"{file_name[:-len(file_extension)]}faa")
             cmd = f"prodigal -i {input_file} -a {output_file}"
             os.system(cmd)
 
@@ -454,4 +454,4 @@ for folder in os.listdir('results/'):
                     predizione = modelli[m].predict_proba(blosum_encoding)
                 df[modelli_nomi[m]] = predizione.tolist() 
             #save file with the same name as file in input+_predicted_peptides
-            df.to_csv(filename+"_predicted_peptides.csv", index = False)
+            df.to_csv("results/prediction/"+filename+"_predicted_peptides.csv", index = False)
