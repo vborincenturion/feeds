@@ -406,6 +406,7 @@ modelli_nomi_NN = ["antimicrobial", "opioid"]
 
 for folder in os.listdir('results/'):
     for filename in folder:
+        print(filename,folder)
         if filename.endswith('.fasta'):
             #prepare the dataframe to be used for storing the info
             input_file = folder + filename
