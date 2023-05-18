@@ -4,7 +4,7 @@ FEEDS is a tool that takes a bacteria genome or predicted proteins of yeast geno
 
 ## Install
 
-Create a conda environment with Python 3.8:
+Create a conda environment with Python 3.9:
 
 ```conda create --name feeds python=3.9```
 
