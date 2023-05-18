@@ -19,6 +19,10 @@ Then, install the required tools/packages:
 - RapidPeptideGeneration - ```pip3 install rpg```
 - Pandas - ```conda install -c anaconda pandas```
 - Biopython - ```conda install -c conda-forge biopython```
+- Tensorflow - ```conda install -c conda-forge tensorflow```
+
+*If you encounter difficulties while installing all the packages, an alternative approach would be to utilize "mamba" instead of the "conda" function.
+To learn how to install "mamba," you can refer to the official documentation available at https://mamba.readthedocs.io/en/latest/installation.html.
 
 Clone this repository:
 
