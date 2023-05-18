@@ -4,9 +4,9 @@ FEEDS is a tool that takes a bacteria genome or predicted proteins of yeast geno
 
 ## Install
 
-Create a conda environment with Python 3.9 and packages compatibiled with numpy v1.19.5:
+Create a conda environment with Python 3.9 and python packages:
 
-```conda create -n feeds python=3.9 numpy=1.19.5 pandas biopython scikit-learn```
+```conda create -n feeds python=3.9 pandas biopython scikit-learn```
 
 Enter the environment:
 
@@ -17,7 +17,7 @@ Then, install the required tools/packages:
 - Prodigal - ```conda install -c bioconda prodigal```
 - Diamond - ```conda install -c bioconda diamond```
 - RapidPeptideGeneration - ```pip3 install rpg```
-- Tensorflow - ```conda install -c esri tensorflow-addons```
+- Tensorflow - ```pip3 install tensorflow-addons[tensorflow-cpu]```
 
 *If you encounter difficulties while installing all the packages, an alternative approach would be to utilize "mamba" instead of the "conda" function.
 To learn how to install "mamba", you can refer to the official documentation available at https://mamba.readthedocs.io/en/latest/installation.html.
