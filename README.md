@@ -4,7 +4,7 @@ FEEDS is a tool that takes a bacteria genome or predicted proteins of yeast geno
 
 ## Install
 
-Create a conda environment with Python 3.9 and python packages:
+Create a conda environment with Python 3.9 and packages:
 
 ```conda create -n feeds python=3.9 pandas biopython scikit-learn```
 
