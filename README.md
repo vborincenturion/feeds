@@ -6,7 +6,7 @@ FEEDS is a tool that takes a bacteria genome or predicted proteins of yeast geno
 
 Create a conda environment with Python 3.8:
 
-```conda create --name feeds python=3.8```
+```conda create --name feeds python=3.9```
 
 Enter the environment:
 
@@ -17,9 +17,9 @@ Then, install the required tools/packages:
 - Prodigal - ```conda install -c bioconda prodigal```
 - Diamond - ```conda install -c bioconda diamond```
 - RapidPeptideGeneration - ```pip3 install rpg```
-- Pandas - ```conda install -c anaconda pandas```
+- Pandas - ```conda install -c anaconda pandas=1.3.4```
 - Biopython - ```conda install -c conda-forge biopython```
-- Tensorflow - ```conda install -c conda-forge tensorflow```
+- Tensorflow - ```conda install -c conda-forge tensorflow``` ```conda install -c esri tensorflow-addons```
 
 *If you encounter difficulties while installing all the packages, an alternative approach would be to utilize "mamba" instead of the "conda" function.
 To learn how to install "mamba," you can refer to the official documentation available at https://mamba.readthedocs.io/en/latest/installation.html.
