@@ -34,7 +34,7 @@ def parse_args():
 
 
 # Define the required directories
-directories = ['diamond', 'orf_prediction', 'merged', 'merged/diamond', 'peptide', 'results', 'results/filtered', 'results/no_filtered', 'results/prediction']
+directories = ['diamond', 'orf_prediction', 'merged', 'merged/diamond', 'results', 'results/filtered', 'results/no_filtered', 'results/prediction']
 
 # Create the directories if they do not exist
 for directory in directories:
