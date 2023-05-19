@@ -164,7 +164,7 @@ elif digest == 's':
             for substrate_file_name in os.listdir('substrate'):
                 if substrate_file_name.endswith('.fasta') or substrate_file_name.endswith('.faa'):
                     # Generate the `rpg` command with the input and output file names and paths, the `-e` option with the RPG_CS values for this file, and the `-d` option with the actual database name
-                    rpg_command = f"rpg -i substrate/{substrate_file_name} -o presults/no_filtered/{file_name[:-4]}_{substrate_file_name[:-6]}_peptide.fasta -e {'    '.join(rpg_cs_values)} -d s"
+                    rpg_command = f"rpg -i substrate/{substrate_file_name} -o results/no_filtered/{file_name[:-4]}_{substrate_file_name[:-6]}_peptide.fasta -e {'    '.join(rpg_cs_values)} -d s"
                 
                     # Run the `rpg` command using `os.system`
                     os.system(rpg_command)   
