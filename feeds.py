@@ -399,11 +399,20 @@ immunomodulatory = pickle.load(open("db/Models/Immunomodulatory.sav", 'rb'))
 neuropeptides = pickle.load(open("db/Models/Neuropeptides.sav", 'rb'))
 opioid = load_model("db/Models/Opioid.h5", compile = True)
 
+motifs = {"antidiabetic":["DPNI","DPNIE","NIE","PNI","PNIE","VDPN","VDPNI","VDPNIE","PVDP","PVDPN","PVDPNI","PVDPNIE"],
+          "antihypertensive":["LHLP","NLHL","PLW","TMP","TTMP","HLPL","KTT","KTTM","KTTMP","NLHLP","PLIY","PLIYP"],
+          "Antimicrobial":["KLL","KFG","FQW","FQWQ","FQWQR","FQWQRN","KFGK","QWQRN","RKV","WQRN"],
+          "antioxidant":["HDH","EGS","GWNI","KVLPVPQK","LLPH","AMRL","AMRLT","DAH","DEQ","EPD","EQA","GGGA","GPPGPPGPP","HPE","LPHH","MRL","MRLT","NGRF","NRPC","PPGPPGPP","SKVLPVPQK","WNIP"],
+          "cardiovascular":["ALRR","EAVD","EAVDA","KALR","QEAV","RGDS","RQEA","ALRRQ","EAVDAL","KALRR","KKALR","QEAVD","QEAVDA","RQEAV","RRQE","RRQEA"],
+          "celiac":["QPF","QQPQ","QPFP","QQPF","QQPFP","QPQQP","PQQPQ","QPFPQ","FPQPQ","PQPQQ"],
+          "immunomodulatory":["KQD","KQDK","RKQD","RKQDK","FNQL","FYF","KPFKF","NKPF","NKPFK","NKPFKF","PFKF","PFNQ","PFNQL","RNK","RNKP","RNKPF","RNKPFK","RNKPFKF","TKFY","VTKF","VTKFY"],
+          "neuropeptides":["NFLR","NFLRF","RNFLR","RNFLRF","LRFG","LRLR","LRLRF","RLRF","FLRFG","PFVEPI"],
+          "opioid":["PFGF","YPFG","YPFGF","YGGF","GFLR","GGFLR","YGGFL","YGGFLR","GGFM","YGGFM"]}
+
 modelli = [antidiabetic,antihypertensive,antioxidant,cardiovascular,celiac,immunomodulatory,neuropeptides]
 modelli_NN = [antimicrobial,opioid]
 modelli_nomi = ["antidiabetic","antihypertensive","antioxidant","cardiovascular","celiac","immunomodulatory","neuropeptides"]
 modelli_nomi_NN = ["antimicrobial", "opioid"]
-
 for folder in os.listdir('results/'):
     for filename in os.listdir('results/'+folder+"/"):
         if filename.endswith('.fasta'):
@@ -415,21 +424,30 @@ for folder in os.listdir('results/'):
                 data_dict["Header"].append(record.description)
                 data_dict["Sequence"].append(str(record.seq))
             df = pd.DataFrame.from_dict(data_dict)
-            df["Function"] = np.nan
-            print(df)
+            df["Similarity search"] = np.nan
+            df["Motif search"] = np.nan
             appaiati = []
+            motivati = []
             #search on the unfiltered database if there is a 100% correspondance
             full_db = pd.read_csv("db/Peptide_all.csv")
             for i in range(len(df["Sequence"])):
                 correspondance = []
+                motif_found = []
                 for j in range(len(full_db["Sequence"])):
                     if df.iloc[i][1] == full_db.iloc[j][1]:
                         correspondance.append(full_db.iloc[j][0])
                         continue
+                for k in motifs:
+                    if df.iloc[i][1] in motifs[k]:
+                        motif_found = k
                 if len(correspondance) == 0:
                     correspondance.append("")
+                if len(motif_found) == 0:
+                    motif_found.append("")
+                motivati.append(motif_found)
                 appaiati.append(correspondance)
-            df["Function"] = appaiati
+            df["Similarity search"] = appaiati
+            df["Motif search"] = motivati
 
             #encoding the sequences in different ways
             sparse_encoding = sparse_peptide(df["Sequence"])
