@@ -104,7 +104,7 @@ else:
 diamond_dir = "diamond"
 
 # Set the filename pattern to match for diamond output files
-diamond_pattern = ".csv"
+diamond_pattern = "*.csv"
 
 # Set the filename for the MEROPS data file
 merops_file = "db/merops_database.tsv"
