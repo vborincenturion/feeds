@@ -410,75 +410,67 @@ motifs = {"antidiabetic":["DPNI","DPNIE","NIE","PNI","PNIE","VDPN","VDPNI","VDPN
           "opioid":["PFGF","YPFG","YPFGF","YGGF","GFLR","GGFLR","YGGFL","YGGFLR","GGFM","YGGFM"]}
 
 modelli = ["antidiabetic", "antihypertensive", "antioxidant", "cardiovascular", "celiac", "immunomodulatory", "neuropeptides"]
-modelli_NN = [antimicrobial, opioid]
+modelli_NN = ["antimicrobial", "opioid"]
 modelli_nomi = ["antidiabetic", "antihypertensive", "antioxidant", "cardiovascular", "celiac", "immunomodulatory", "neuropeptides"]
 modelli_nomi_NN = ["antimicrobial", "opioid"]
 
-for filename in os.listdir('results/filtered/'):
-    if filename.endswith('.fasta'):
-        # Prepare the dataframe to be used for storing the info
-        input_file = 'results/filtered/' + filename
-        records = list(SeqIO.parse(input_file, "fasta"))
-        data_dict = {"Header": [], "Sequence": []}
-        
-        for i, record in enumerate(records):
-            data_dict["Header"].append(record.description)
-            data_dict["Sequence"].append(str(record.seq))
-        
-        df = pd.DataFrame.from_dict(data_dict)
-        df["Similarity search"] = np.nan
-        df["Motif search"] = np.nan
-        appaiati = []
-        motivati = []
-        
-        # Search on the unfiltered database if there is a 100% correspondence
-        full_db = pd.read_csv("db/Peptide_all.csv")
-        
-        for i in range(len(df["Sequence"])):
-            correspondences = []
-            motif_found = []
-            
-            for j in range(len(full_db["Sequence"])):
-                if df.iloc[i][1] == full_db.iloc[j][1]:
-                    correspondences.append(full_db.iloc[j][0])
-                    continue
-            
-            for k in modelli:
-                if df.iloc[i][1] in motifs[k]:
-                    motif_found.append(k)
-                    
-            if len(correspondences) == 0:
-                correspondences.append("")
-            if len(motif_found) == 0:
-                motif_found.append("")
-            
-            motivati.append(motif_found)
-            appaiati.append(correspondences)
-        
-        df["Similarity search"] = appaiati
-        df["Motif search"] = motivati
+for folder in os.listdir('results/filtered'):
+    for filename in os.listdir('results/filtered/'):
+        if filename.endswith('.fasta'):
+            #prepare the dataframe to be used for storing the info
+            input_file = 'results/filtered/' + filename
+            records = list(SeqIO.parse(input_file, "fasta"))
+            data_dict = {"Header": [], "Sequence": []}
+            for i, record in enumerate(records):
+                data_dict["Header"].append(record.description)
+                data_dict["Sequence"].append(str(record.seq))
+            df = pd.DataFrame.from_dict(data_dict)
+            df["Similarity search"] = np.nan
+            df["Motif search"] = np.nan
+            appaiati = []
+            motivati = []
+            #search on the unfiltered database if there is a 100% correspondance
+            full_db = pd.read_csv("db/Peptide_all.csv")
+            for i in range(len(df["Sequence"])):
+                correspondance = []
+                motif_found = []
+                for j in range(len(full_db["Sequence"])):
+                    if df.iloc[i][1] == full_db.iloc[j][1]:
+                        correspondance.append(full_db.iloc[j][0])
+                        continue
+                for k in motifs:
+                    if df.iloc[i][1] in motifs[k]:
+                        motif_found = k
+                if len(correspondance) == 0:
+                    correspondance.append("")
+                if len(motif_found) == 0:
+                    motif_found.append("")
+                motivati.append(motif_found)
+                appaiati.append(correspondance)
+            df["Similarity search"] = appaiati
+            df["Motif search"] = motivati
 
-        #encoding the sequences in different ways
-        sparse_encoding = sparse_peptide(df["Sequence"])
-        threemer_encoded = threemers(df["Sequence"])
-        dense_encoding = denser_peptide(df["Sequence"])
-        blosum_encoding = blosum_substitution(df["Sequence"])
-        sparse_NN = vectorize_peptide(df["Sequence"])
-        #predict using keras NN models
-        for m in range(len(modelli_NN)):
-            predizione = modelli_NN[m].predict(sparse_NN) 
-            df[modelli_nomi_NN[m]] = predizione.tolist() 
-        #predict with sklearn
-        for m in range(len(modelli)):
-            print(modelli_nomi[m])
-            if modelli_nomi[m] in ["antioxidant","cardiovascular","celiac","immunomodulatory"]:
-                predizione = modelli[m].predict_proba(threemer_encoded)
-            elif modelli_nomi[m] == "antidiabetic":
-                predizione = modelli[m].predict_proba(sparse_encoding)
-            elif modelli_nomi[m] == "neuropeptides":
-                predizione = modelli[m].predict_proba(dense_encoding)
-            elif modelli_nomi[m] == "antihypertensive":
-                predizione = modelli[m].predict_proba(blosum_encoding)
-            df[modelli_nomi[m]] = predizione.tolist() 
-        #save file with the same name as file in input+_predicted_peptides
-        df.to_csv("results/prediction/"+filename+"_predicted_peptides.csv", index = False)
+            #encoding the sequences in different ways
+            sparse_encoding = sparse_peptide(df["Sequence"])
+            threemer_encoded = threemers(df["Sequence"])
+            dense_encoding = denser_peptide(df["Sequence"])
+            blosum_encoding = blosum_substitution(df["Sequence"])
+            sparse_NN = vectorize_peptide(df["Sequence"])
+            #predict using keras NN models
+            for m in range(len(modelli_NN)):
+                predizione = modelli_NN[m].predict(sparse_NN) 
+                df[modelli_nomi_NN[m]] = predizione.tolist() 
+            #predict with sklearn
+            for m in range(len(modelli)):
+                print(modelli_nomi[m])
+                if modelli_nomi[m] in ["antioxidant","cardiovascular","celiac","immunomodulatory"]:
+                    predizione = modelli[m].predict_proba(threemer_encoded)
+                elif modelli_nomi[m] == "antidiabetic":
+                    predizione = modelli[m].predict_proba(sparse_encoding)
+                elif modelli_nomi[m] == "neuropeptides":
+                    predizione = modelli[m].predict_proba(dense_encoding)
+                elif modelli_nomi[m] == "antihypertensive":
+                    predizione = modelli[m].predict_proba(blosum_encoding)
+                df[modelli_nomi[m]] = predizione.tolist() 
+            #save file with the same name as file in input+_predicted_peptides
+            df.to_csv("results/prediction/"+filename+"_predicted_peptides.csv", index = False)
