@@ -410,7 +410,7 @@ motifs = {"antidiabetic":["DPNI","DPNIE","NIE","PNI","PNIE","VDPN","VDPNI","VDPN
           "opioid":["PFGF","YPFG","YPFGF","YGGF","GFLR","GGFLR","YGGFL","YGGFLR","GGFM","YGGFM"]}
 
 modelli = ["antidiabetic", "antihypertensive", "antioxidant", "cardiovascular", "celiac", "immunomodulatory", "neuropeptides"]
-modelli_NN = ["antimicrobial", "opioid"]
+modelli_NN = [antimicrobial, opioid]
 modelli_nomi = ["antidiabetic", "antihypertensive", "antioxidant", "cardiovascular", "celiac", "immunomodulatory", "neuropeptides"]
 modelli_nomi_NN = ["antimicrobial", "opioid"]
 
