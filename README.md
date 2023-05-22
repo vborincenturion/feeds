@@ -66,8 +66,9 @@ Run the feeds.py script with the required options. For example, to run the tool 
 
 ```python feeds.py -t 4 -k bacteria -f_mol 4 -d s``` 
 
-This will generate a table with the protease genome profile, an output fasta file with the predicted peptides digested by each secreted genome enzyme with a molecular protein weight filter of <= 4 KDal and a table with the biopeptide classification.
+This will generate a table with the protease genome profile, an output fasta file with the predicted peptides digested by each secreted genome enzyme with a molecular protein weight filter of ≤ 4 KDal and a table with the biopeptide classification.
 
+- Since the Machine Learning model was trained with peptides of a maximum length of 100 aa, it is highly recommended to use the 'f_length' filter with a limit of ≤ 100.
 - Multiple genomes and substrate sequence files can be placed in the folders.
 - To use the tool for Yeast genomes, users need to provide the predicted ORFs of the genome, as Prodigal only predicts ORFs for bacteria.
 
