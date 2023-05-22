@@ -416,7 +416,7 @@ modelli_nomi_NN = ["antimicrobial", "opioid"]
 
 for folder in os.listdir('results/filtered'):
     for filename in os.listdir('results/filtered/'):
-        if filename.endswith('.fasta') and os.stat('results/filtered/'+filename).st_size != 0::
+        if filename.endswith('.fasta') and os.stat('results/filtered/'+filename).st_size != 0:
             #prepare the dataframe to be used for storing the info
             input_file = 'results/filtered/' + filename
             records = list(SeqIO.parse(input_file, "fasta"))
