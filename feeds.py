@@ -413,41 +413,40 @@ modelli = [antidiabetic,antihypertensive,antioxidant,cardiovascular,celiac,immun
 modelli_NN = [antimicrobial,opioid]
 modelli_nomi = ["antidiabetic","antihypertensive","antioxidant","cardiovascular","celiac","immunomodulatory","neuropeptides"]
 modelli_nomi_NN = ["antimicrobial", "opioid"]
-for folder in os.listdir('results/'):
-    for filename in os.listdir('results/'+folder+"/"):
-        if filename.endswith('.fasta'):
-            #prepare the dataframe to be used for storing the info
-            input_file = 'results/' + folder + "/" + filename
-            records = list(SeqIO.parse(input_file, "fasta"))
-            data_dict = {"Header": [], "Sequence": []}
-            for i, record in enumerate(records):
-                data_dict["Header"].append(record.description)
-                data_dict["Sequence"].append(str(record.seq))
-            df = pd.DataFrame.from_dict(data_dict)
-            df["Similarity search"] = np.nan
-            df["Motif search"] = np.nan
-            appaiati = []
-            motivati = []
-            #search on the unfiltered database if there is a 100% correspondance
-            full_db = pd.read_csv("db/Peptide_all.csv")
-            for i in range(len(df["Sequence"])):
-                correspondance = []
-                motif_found = []
-                for j in range(len(full_db["Sequence"])):
-                    if df.iloc[i][1] == full_db.iloc[j][1]:
-                        correspondance.append(full_db.iloc[j][0])
-                        continue
-                for k in motifs:
-                    if df.iloc[i][1] in motifs[k]:
-                        motif_found = k
-                if len(correspondance) == 0:
-                    correspondance.append("")
-                if len(motif_found) == 0:
-                    motif_found.append("")
-                motivati.append(motif_found)
-                appaiati.append(correspondance)
-            df["Similarity search"] = appaiati
-            df["Motif search"] = motivati
+for filename in os.listdir('results/filtered/'):
+    if filename.endswith('.fasta'):
+        #prepare the dataframe to be used for storing the info
+        input_file = 'results/filtered' + filename
+        records = list(SeqIO.parse(input_file, "fasta"))
+        data_dict = {"Header": [], "Sequence": []}
+        for i, record in enumerate(records):
+           data_dict["Header"].append(record.description)
+           data_dict["Sequence"].append(str(record.seq))
+        df = pd.DataFrame.from_dict(data_dict)
+        df["Similarity search"] = np.nan
+        df["Motif search"] = np.nan
+        appaiati = []
+        motivati = []
+        #search on the unfiltered database if there is a 100% correspondance
+        full_db = pd.read_csv("db/Peptide_all.csv")
+        for i in range(len(df["Sequence"])):
+            correspondance = []
+            motif_found = []
+            for j in range(len(full_db["Sequence"])):
+            if df.iloc[i][1] == full_db.iloc[j][1]:
+                correspondance.append(full_db.iloc[j][0])
+                    continue
+            for k in motifs:
+            if df.iloc[i][1] in motifs[k]:
+                motif_found = k
+              if len(correspondance) == 0:
+                correspondance.append("")
+              if len(motif_found) == 0:
+                motif_found.append("")
+              motivati.append(motif_found)
+              appaiati.append(correspondance)
+         df["Similarity search"] = appaiati
+         df["Motif search"] = motivati
 
             #encoding the sequences in different ways
             sparse_encoding = sparse_peptide(df["Sequence"])
