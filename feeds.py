@@ -432,19 +432,19 @@ for filename in os.listdir('results/filtered/'):
         for i in range(len(df["Sequence"])):
             correspondance = []
             motif_found = []
-            for j in range(len(full_db["Sequence"])):
-            if df.iloc[i][1] == full_db.iloc[j][1]:
-                correspondance.append(full_db.iloc[j][0])
-                    continue
+            for j in range(len(full_db["Sequence"]):
+                           if df.iloc[i][1] == full_db.iloc[j][1]:
+                           correspondance.append(full_db.iloc[j][0])
+                           continue
             for k in motifs:
-            if df.iloc[i][1] in motifs[k]:
-                motif_found = k
-              if len(correspondance) == 0:
-                correspondance.append("")
-              if len(motif_found) == 0:
-                motif_found.append("")
-              motivati.append(motif_found)
-              appaiati.append(correspondance)
+                           if df.iloc[i][1] in motifs[k]:
+                           motif_found = k
+                           if len(correspondance) == 0:
+                           correspondance.append("")
+                           if len(motif_found) == 0:
+                           motif_found.append("")
+                           motivati.append(motif_found)
+                           appaiati.append(correspondance)
          df["Similarity search"] = appaiati
          df["Motif search"] = motivati
 
