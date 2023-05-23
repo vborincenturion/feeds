@@ -278,7 +278,14 @@ if filter_mol:
                     if kda_weight <= filter_mol:
                         SeqIO.write(record, out, "fasta")
 
-                        
+# Delete files with no sequences
+output_dir = "results/filtered"
+
+for filename in os.listdir(output_dir):
+    file_path = os.path.join(output_dir, filename)
+    if os.path.isfile(file_path) and os.path.getsize(file_path) == 0:
+        os.remove(file_path)                        
+                    
 #amino acid position for sparse encoding
 aa_pos = {"A":0,"C":1,"D":2,"E":3,"F":4,"G":5,"H":6,"I":7,"K":8,"L":9,"M":10,"N":11,"P":12,"Q":13,"R":14,"S":15,"T":16,"V":17,"W":18,"Y":19,"-":20}
 
@@ -416,7 +423,7 @@ modelli_nomi_NN = ["antimicrobial", "opioid"]
 
 for folder in os.listdir('results/filtered'):
     for filename in os.listdir('results/filtered/'):
-        if filename.endswith('.fasta') and os.stat('results/filtered/'+filename).st_size != 0:
+        if filename.endswith('.fasta'):
             #prepare the dataframe to be used for storing the info
             input_file = 'results/filtered/' + filename
             records = list(SeqIO.parse(input_file, "fasta"))
