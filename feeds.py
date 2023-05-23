@@ -391,8 +391,12 @@ def vectorize_peptide(peptide_list): #sparse encoding for NN
             pept_vector[counter_list,j,aa_pos["-"]]=1
         counter_list +=1
         counter = 0
-
-    pept_vector = np.squeeze(pept_vector)
+    counter = 0
+    counter_list = 0
+    if len(peptide_list) == 1:
+        pept_vector = np.squeeze(pept_vector,axis=3)
+    else:
+        pept_vector = np.squeeze(pept_vector)
     return pept_vector
 
 #load all the models(from sklearn and keras presaved models)
