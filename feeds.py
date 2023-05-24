@@ -485,3 +485,5 @@ for folder in os.listdir('results/filtered'):
                 df[modelli_nomi[m]] = predizione.tolist() 
             #save file with the same name as file in input+_predicted_peptides
             df.to_csv("results/prediction/"+filename+"_predicted_peptides.csv", index = False)
+
+print("|Finished, Thanks for using FEEDS|")
