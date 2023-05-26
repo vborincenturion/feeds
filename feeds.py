@@ -425,11 +425,13 @@ modelli_NN = [antimicrobial, opioid]
 modelli_nomi = ["antidiabetic", "antihypertensive", "antioxidant", "cardiovascular", "celiac", "immunomodulatory", "neuropeptides"]
 modelli_nomi_NN = ["antimicrobial", "opioid"]
 
+count=0
+counter=0
 for filename in os.listdir('results/filtered/'):
-    if filename.endswith('.fasta') and os.stat('results/filtered/'+filename).st_size != 0:
+    if filename.endswith('.fasta') and os.stat('results/filtered/'+filename):
         count +=1
 for filename in os.listdir('results/filtered/'):
-    if filename.endswith('.fasta') and os.stat('results/filtered/'+filename).st_size != 0:
+    if filename.endswith('.fasta') and os.stat('results/filtered/'+filename):
         counter +=1
         #prepare the dataframe to be used for storing the info
         input_file = 'results/filtered/' + filename
@@ -491,5 +493,3 @@ for filename in os.listdir('results/filtered/'):
         if count == counter:
             print("|Finished, Thanks for using FEEDS|")
             exit()
-
-
