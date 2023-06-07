@@ -64,9 +64,9 @@ To use the tool, place the genome you wish to test into the genome folder of the
 
 Run the feeds.py script with the required options. For example, to run the tool with 4 threads, a bacteria genome file, with a molecular weight filter and in sequential digestion mode, use:
 
-```python feeds.py -t 4 -k bacteria -f_mol 4 -d s``` 
+```python feeds.py -t 4 -k bacteria -f_length 100 -d s``` 
 
-This will generate a table with the protease genome profile, an output fasta file with the predicted peptides digested by each secreted genome enzyme with a molecular protein weight filter of ≤ 4 KDal and a table with the biopeptide classification.
+This will generate a table with the protease genome profile, an output fasta file with the predicted peptides digested by each secreted genome enzyme with a protein length filter of ≤ 100 aa and a table with the biopeptide classification.
 
 - Since the Machine Learning model was trained with peptides of a maximum length of 100 aa, it is highly recommended to use the 'f_length' filter with a limit of ≤ 100.
 - Multiple genomes and substrate sequence files can be placed in the folders.
@@ -79,4 +79,4 @@ This will generate a table with the protease genome profile, an output fasta fil
 - peptide_weight_ranges.csv: peptide molecular weight range information generated after the digestion mode
 - results/no_filtered/: all peptides sequence files generated after the digestion mode without length or weight filter
 - results/filtered/: all peptides sequence files generated after the digestion mode with length or weight filter
-- results/prediction/: results of machine learning class predictions
+- results/prediction/: probability results of machine learning class predictions
