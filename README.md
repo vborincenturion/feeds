@@ -80,3 +80,10 @@ This will generate a table with the protease genome profile, an output fasta fil
 - results/no_filtered/: all peptides sequence files generated after the digestion mode without length or weight filter
 - results/filtered/: all peptides sequence files generated after the digestion mode with length or weight filter
 - results/prediction/: probability results of machine learning class predictions
+
+## Third-party software
+FEEDS redistributes the following third-party software:
+
+* [prodigal](https://github.com/hyattpd/Prodigal)
+* [DIAMOND](https://github.com/bbuchfink/diamond)
+* [RapidPeptidesGeneration](https://gitlab.pasteur.fr/nmaillet/rpg)
