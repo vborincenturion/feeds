@@ -85,7 +85,7 @@ This will generate a table with the protease genome profile, an output fasta fil
 - results/prediction/: probability results of machine learning class predictions
 
 ## Third-party software
-FEEDS redistributes the following third-party software:
+FEEDS is distributed under a GPL-3 license. Additionally, FEEDS redistributes the following third-party software:
 
 * [Prodigal](https://github.com/hyattpd/Prodigal)
 * [DIAMOND](https://github.com/bbuchfink/diamond)
