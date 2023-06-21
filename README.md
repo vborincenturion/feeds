@@ -1,7 +1,7 @@
 # FEEDS, Food wastE biopEptiDe claSsifier: from microbial genomes to biopeptides function
 <!-- badges: start -->
-[!Operating System: Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
-[!Skills: Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+[![Operating System: Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+[![Skills: Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 [![License: GPL v3](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/vborincenturion/feeds/blob/main/LICENSE)
 <!--badges: end -->
 
