@@ -84,6 +84,6 @@ This will generate a table with the protease genome profile, an output fasta fil
 ## Third-party software
 FEEDS redistributes the following third-party software:
 
-* [prodigal](https://github.com/hyattpd/Prodigal)
+* [Prodigal](https://github.com/hyattpd/Prodigal)
 * [DIAMOND](https://github.com/bbuchfink/diamond)
 * [RapidPeptidesGeneration](https://gitlab.pasteur.fr/nmaillet/rpg)
