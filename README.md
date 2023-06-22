@@ -92,5 +92,5 @@ FEEDS is distributed under a GPL-3 license. Additionally, FEEDS redistributes th
 * [RapidPeptidesGeneration](https://gitlab.pasteur.fr/nmaillet/rpg)
 
 ## Appreciation
-This tool was developed as part of the PRIN project: Research Projects of National Relevance - Ministry of University and Research of Italy. Prot. 2020CNRB84.
+This tool was developed as part of the project "Future-proof bioactive peptides from food by-products: an eco-sustainable bioprocessing for tailored multifunctional foods (PROACTIVE)" - PRIN: Research Projects of National Relevance - Ministry of University and Research of Italy. - Prot. 2020CNRB84.
 
