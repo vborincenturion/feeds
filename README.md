@@ -90,3 +90,7 @@ FEEDS is distributed under a GPL-3 license. Additionally, FEEDS redistributes th
 * [Prodigal](https://github.com/hyattpd/Prodigal)
 * [DIAMOND](https://github.com/bbuchfink/diamond)
 * [RapidPeptidesGeneration](https://gitlab.pasteur.fr/nmaillet/rpg)
+
+## Appreciation
+This tool was developed as part of the PRIN project: Research Projects of National Relevance - Ministry of University and Research of Italy. Prot. 2020CNRB84.
+
