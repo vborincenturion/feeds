@@ -1,4 +1,4 @@
-# FEEDS, Food wastE biopEptiDe claSsifier: from microbial genomes to biopeptides function
+# FEEDS, the Food wastE biopEptiDe claSsifier: from microbial genomes and substrates to biopeptides function
 <!-- badges: start -->
 [![License: GPL v3](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/vborincenturion/feeds/blob/main/LICENSE)
 <!--badges: end -->
@@ -92,5 +92,5 @@ FEEDS is distributed under a GPL-3 license. Additionally, FEEDS redistributes th
 * [RapidPeptidesGeneration](https://gitlab.pasteur.fr/nmaillet/rpg)
 
 ## Appreciation
-This tool was developed as part of the project "Future-proof bioactive peptides from food by-products: an eco-sustainable bioprocessing for tailored multifunctional foods (PROACTIVE)" - PRIN: Research Projects of National Relevance - Ministry of University and Research of Italy. - Prot. 2020CNRB84.
+This tool was developed as part of the project "Future-proof bioactive peptides from food by-products: an eco-sustainable bioprocessing for tailored multifunctional foods (PROACTIVE)" - PRIN: Research Projects of National Relevance - Ministry of University and Research of Italy. - Prot. 2020CNRB84 and by the MIUR FFO-2022 “L’innovazione delle biotecnologie nell’era della medicina di precisione, dei cambiamenti climatici e dell’economia circolare” (Una piattaforma biotecnologica per lo sfruttamento dei sottoprodotti agroindustriali nella coltivazione di microrganismi benefici).
 
