@@ -5,7 +5,7 @@
 
 FEEDS is a tool that takes a bacteria genome or predicted proteins of yeast genomes to classify the secreted protease profile. It also digests protein substrate sequences to predict peptides and classify the biopeptide sequences with a novel machine learning method. This tool is useful for identifying potential bioactive compounds in food and discovering novel applications for waste management.
 
-"If you used this tool, please cite the work 'FEEDS, the Food wastE biopEptiDe claSsifier: From microbial genomes and substrates to biopeptides function: https://doi.org/10.1016/j.crbiot.2024.100186'."
+If you used this tool, please cite the work FEEDS, the Food wastE biopEptiDe claSsifier: From microbial genomes and substrates to biopeptides function: https://doi.org/10.1016/j.crbiot.2024.100186.
 
 ## Install
 
