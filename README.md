@@ -86,6 +86,13 @@ This will generate a table with the protease genome profile, an output fasta fil
 - results/filtered/: all peptides sequence files generated after the digestion mode with length or weight filter
 - results/prediction/: probability results of machine learning class predictions
 
+## Testing
+
+Users of the FEEDS tool can run a test using the files provided in the "test" folder by following the steps outlined in this repository.
+This folder contains two genomes: Lactobacillus johnsonii NCC533 (bacteria) and Saccharomyces cerevisiae Fosters B (yeast), along with the substrate glutelin from different origins (Barley and Grape).
+
+Please refer to the instructions for correctly placing the files in their respective folders and running the test.
+
 ## License and Third-party software
 FEEDS is distributed under a GPL-3 license. Additionally, FEEDS redistributes the following third-party software:
 
